@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'Personal blog by Ajeet Kumar Singh - Technology Enthusiast',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://ajeetkumarsingh.dev',
+  siteUrl: 'https://ajeetkumarsingh321.github.io/tech_blog',
 
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/profile.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
