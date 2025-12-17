@@ -54,23 +54,24 @@ const securityHeaders = [
   },
 ]
 
-const output = process.env.EXPORT ? 'export' : undefined
-const basePath = process.env.BASE_PATH || undefined
-const unoptimized = process.env.UNOPTIMIZED ? true : undefined
-
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 module.exports = () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
-  return plugins.reduce((acc, next) => next(acc), {
-    output,
-    basePath,
+  
+  const config = {
+    // Static export configuration
+    output: process.env.EXPORT ? 'export' : undefined,
+    basePath: process.env.BASE_PATH || undefined,
+    
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+    
     // Configure turbopack - empty object disables it in favor of webpack
     turbopack: {},
+    
     images: {
       remotePatterns: [
         {
@@ -78,8 +79,9 @@ module.exports = () => {
           hostname: 'picsum.photos',
         },
       ],
-      unoptimized,
+      unoptimized: process.env.UNOPTIMIZED ? true : undefined,
     },
+    
     async headers() {
       return [
         {
@@ -88,6 +90,7 @@ module.exports = () => {
         },
       ]
     },
-
-  })
+  }
+  
+  return plugins.reduce((acc, next) => next(acc), config)
 }
