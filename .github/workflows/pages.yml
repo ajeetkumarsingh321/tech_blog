@@ -32,8 +32,10 @@ jobs:
         
       - name: Install platform-specific binaries
         run: |
-          npm install @tailwindcss/oxide-linux-x64-gnu --no-save
-          npm install lightningcss-linux-x64-gnu --no-save
+          # Add platform-specific binaries to package.json temporarily
+          npm pkg set optionalDependencies.@tailwindcss/oxide-linux-x64-gnu=latest
+          npm pkg set optionalDependencies.lightningcss-linux-x64-gnu=latest
+          npm install
         
       - name: Generate Contentlayer files
         run: npx contentlayer2 build
