@@ -57,40 +57,39 @@ const securityHeaders = [
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
+const nextConfig = {
+  // Static export configuration - hardcoded to prevent external injection
+  output: process.env.EXPORT ? 'export' : undefined,
+  basePath: process.env.BASE_PATH || undefined,
+  
+  reactStrictMode: true,
+  trailingSlash: false,
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  
+  // Configure turbopack - empty object disables it in favor of webpack
+  turbopack: {},
+  
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+    unoptimized: process.env.UNOPTIMIZED ? true : undefined,
+  },
+  
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
+}
+
 module.exports = () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
-  
-  const config = {
-    // Static export configuration
-    output: process.env.EXPORT ? 'export' : undefined,
-    basePath: process.env.BASE_PATH || undefined,
-    
-    reactStrictMode: true,
-    trailingSlash: false,
-    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    
-    // Configure turbopack - empty object disables it in favor of webpack
-    turbopack: {},
-    
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'picsum.photos',
-        },
-      ],
-      unoptimized: process.env.UNOPTIMIZED ? true : undefined,
-    },
-    
-    async headers() {
-      return [
-        {
-          source: '/(.*)',
-          headers: securityHeaders,
-        },
-      ]
-    },
-  }
-  
-  return plugins.reduce((acc, next) => next(acc), config)
+  return plugins.reduce((acc, next) => next(acc), nextConfig)
 }

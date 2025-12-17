@@ -1,4 +1,4 @@
-name: Deploy Next.js to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -15,7 +15,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +35,6 @@ jobs:
         
       - name: Install platform-specific binaries
         run: |
-          # Add platform-specific binaries to package.json temporarily
           npm pkg set optionalDependencies.@tailwindcss/oxide-linux-x64-gnu=latest
           npm pkg set optionalDependencies.lightningcss-linux-x64-gnu=latest
           npm install
@@ -40,7 +42,7 @@ jobs:
       - name: Generate Contentlayer files
         run: npx contentlayer2 build
         
-      - name: Build Next.js
+      - name: Build static site
         run: npx next build --webpack
         env:
           EXPORT: 1
@@ -50,7 +52,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
           CI: true
           
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
