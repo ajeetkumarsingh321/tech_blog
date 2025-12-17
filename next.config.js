@@ -69,7 +69,8 @@ module.exports = () => {
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    turbopack: {},
+    // Disable turbopack in CI environment due to Tailwind CSS binary issues
+    ...(process.env.CI ? {} : { turbopack: {} }),
     images: {
       remotePatterns: [
         {

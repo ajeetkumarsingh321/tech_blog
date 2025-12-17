@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: Install platform-specific Tailwind CSS binary
+        run: npm install @tailwindcss/oxide-linux-x64-gnu --no-save
+        
+      - name: Generate Contentlayer files
+        run: npx contentlayer2 build
+        
       - name: Build Next.js
         run: npm run build
         env:
@@ -37,6 +43,7 @@ jobs:
           UNOPTIMIZED: 1
           BASE_PATH: /tech_blog
           NODE_ENV: production
+          TURBO: 0
           
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
