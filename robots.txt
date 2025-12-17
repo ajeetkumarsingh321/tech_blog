@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://ajeetkumarsingh321.github.io/tech_blog
+Sitemap: https://ajeetkumarsingh321.github.io/tech_blog/sitemap.xml

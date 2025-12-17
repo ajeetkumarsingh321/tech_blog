@@ -1,0 +1,4 @@
+:HL["/tech_blog/_next/static/media/36966cca54120369-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/tech_blog/_next/static/css/ff6a6d9fe46408c9.css","style"]
+:HL["/tech_blog/_next/static/css/6f758982401b9445.css","style"]
+0:{"buildId":"Ac_OkilmAmBjSYBmpWENg","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"_not-found","paramType":null,"paramKey":"_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
