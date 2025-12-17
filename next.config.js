@@ -69,8 +69,8 @@ module.exports = () => {
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    // Force webpack instead of turbopack in CI
-    turbopack: process.env.CI ? false : undefined,
+    // Configure turbopack - empty object disables it in favor of webpack
+    turbopack: {},
     images: {
       remotePatterns: [
         {

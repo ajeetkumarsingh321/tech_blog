@@ -37,7 +37,7 @@ jobs:
         run: npx contentlayer2 build
         
       - name: Build Next.js
-        run: npx next build
+        run: npx next build --webpack
         env:
           EXPORT: 1
           UNOPTIMIZED: 1
@@ -45,7 +45,6 @@ jobs:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: 1
           CI: true
-          FORCE_WEBPACK: true
           
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
