@@ -1,45 +1,21 @@
 import Link from '@/components/Link'
-import Image from '@/components/Image'
+
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
-import { allAuthors } from 'contentlayer/generated'
 
 const MAX_DISPLAY = 5
 
 export default function Home({ posts }) {
-  const author = allAuthors.find((p) => p.slug === 'default')
-
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        {/* Author Profile Section */}
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <div className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-6 md:items-center">
-            {author?.avatar && (
-              <Image
-                src={author.avatar}
-                alt={author.name}
-                width={120}
-                height={120}
-                className="h-24 w-24 md:h-32 md:w-32 rounded-full"
-              />
-            )}
-            <div className="text-center md:text-left">
-              <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-                {author?.name || 'Ajeet Kumar Singh'}
-              </h1>
-              <p className="text-lg leading-7 text-gray-500 dark:text-gray-400 mt-2">
-                {siteMetadata.description}
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        {/* Latest Posts Section */}
-        <div className="pt-6">
-          <h2 className="text-2xl leading-8 font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-6">
-            Latest Posts
-          </h2>
+          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+            Latest
+          </h1>
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+            {siteMetadata.description}
+          </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
