@@ -1,0 +1,12 @@
+/* Prevent browser extension interference */
+/* This CSS helps normalize styles that might be affected by browser extensions */
+
+/* Ensure consistent rendering regardless of extension attributes */
+body[bis_skin_checked],
+body[data-new-gr-c-s-check-loaded],
+body[data-gr-ext-installed],
+div[bis_skin_checked] {
+  /* Reset any potential extension styling */
+  outline: none !important;
+  border: none !important;
+}
