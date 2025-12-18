@@ -61,20 +61,34 @@ const SiteTranslationWidget = () => {
         localStorage.setItem('preferred-language', languageCode)
         setCurrentLang(languageCode)
         
-        // Use a more reliable Google Translate URL approach
+        // Try different Google Translate methods
         const currentUrl = window.location.href
-        const translateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}&anno=2`
         
-        // Navigate to translated version
-        window.location.href = translateUrl
+        // Method 1: Direct translate.google.com approach (most reliable)
+        const translateUrl = `https://translate.google.com/translate?hl=en&sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}`
+        
+        // Method 2: If that fails, try the widget approach with a timeout
+        const tryTranslation = () => {
+          try {
+            window.location.href = translateUrl
+          } catch (err) {
+            // Fallback: Open in new tab if same-window fails
+            console.log('Opening in new tab as fallback')
+            window.open(translateUrl, '_blank')
+          }
+        }
+        
+        // Add small delay to ensure state is saved
+        setTimeout(tryTranslation, 100)
       }
       
       setIsOpen(false)
     } catch (error) {
       console.error('Translation error:', error)
-      // Simple fallback - open in new tab
-      const googleTranslateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(window.location.href)}`
-      window.open(googleTranslateUrl, '_blank')
+      // Ultimate fallback - open Google Translate in new tab with different URL structure
+      const currentUrl = window.location.href
+      const fallbackUrl = `https://translate.google.com/?sl=en&tl=${languageCode}&text=${encodeURIComponent(currentUrl)}&op=translate`
+      window.open(fallbackUrl, '_blank')
       setIsOpen(false)
     }
   }

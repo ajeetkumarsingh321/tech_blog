@@ -55,6 +55,7 @@ const TranslationWidget = () => {
       if (languageCode === 'en') {
         // Reset to original page
         localStorage.setItem('preferred-language', 'en')
+        setCurrentLang('en')
         // Remove any translation cookies
         document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
         // Reload to show original content
@@ -62,22 +63,36 @@ const TranslationWidget = () => {
       } else {
         // Save language preference
         localStorage.setItem('preferred-language', languageCode)
+        setCurrentLang(languageCode)
         
-        // Use a more reliable Google Translate URL approach
+        // Try different Google Translate methods
         const currentUrl = window.location.href
-        const translateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}&anno=2`
         
-        // Navigate to translated version
-        window.location.href = translateUrl
+        // Method 1: Direct translate.google.com approach (most reliable)
+        const translateUrl = `https://translate.google.com/translate?hl=en&sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}`
+        
+        // Method 2: If that fails, try the widget approach with a timeout
+        const tryTranslation = () => {
+          try {
+            window.location.href = translateUrl
+          } catch (err) {
+            // Fallback: Open in new tab if same-window fails
+            console.log('Opening in new tab as fallback')
+            window.open(translateUrl, '_blank')
+          }
+        }
+        
+        // Add small delay to ensure state is saved
+        setTimeout(tryTranslation, 100)
       }
       
       setIsOpen(false)
     } catch (error) {
       console.error('Translation error:', error)
-      // Simple fallback - open in new tab
+      // Ultimate fallback - open Google Translate in new tab with different URL structure
       const currentUrl = window.location.href
-      const googleTranslateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}`
-      window.open(googleTranslateUrl, '_blank')
+      const fallbackUrl = `https://translate.google.com/?sl=en&tl=${languageCode}&text=${encodeURIComponent(currentUrl)}&op=translate`
+      window.open(fallbackUrl, '_blank')
       setIsOpen(false)
     }
   }
