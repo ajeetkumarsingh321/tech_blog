@@ -60,7 +60,7 @@ const securityHeaders = [
 const nextConfig = {
   // Static export configuration - hardcoded to prevent external injection
   output: 'export',
-  basePath: '/tech_blog',
+  basePath: '',
   
   reactStrictMode: true,
   trailingSlash: false,

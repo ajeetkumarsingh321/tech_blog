@@ -6,10 +6,10 @@ const siteMetadata = {
   description: 'Personal blog by Ajeet Kumar Singh - Technology Enthusiast',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://ajeetkumarsingh321.github.io/tech_blog',
+  siteUrl: 'https://ajeetkumarsingh.tech',
 
-  siteLogo: '/tech_blog/static/images/profile.png',
-  socialBanner: '/tech_blog/static/images/twitter-card.png',
+  siteLogo: '/static/images/profile.png',
+  socialBanner: '/static/images/twitter-card.png',
   email: 'ajeet@ajeetkumarsingh.dev',
   twitter: '',
   facebook: 'https://www.facebook.com/ajeet.k.singh.10',
