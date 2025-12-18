@@ -22,38 +22,61 @@ const SiteTranslationWidget = () => {
   ]
 
   useEffect(() => {
-    // Check if we're on a translated Google Translate page
-    const url = window.location.href
-    if (url.includes('translate.google.com')) {
-      const params = new URL(url).searchParams
-      const targetLang = params.get('tl')
-      if (targetLang) {
-        setCurrentLang(targetLang)
-      }
-    }
-  }, [])
-
-  const handleTranslate = (languageCode: string) => {
-    if (languageCode === 'en') {
-      // If English is selected, redirect to original site
-      const originalUrl = window.location.origin + window.location.pathname + window.location.search
-      window.location.href = originalUrl
-    } else {
-      // Get the base URL (without Google Translate wrapper)
-      let baseUrl = window.location.href
-      if (baseUrl.includes('translate.google.com')) {
-        // Extract original URL from Google Translate
+    // Detect current language from various sources
+    const detectCurrentLanguage = () => {
+      // Check if we're on a Google Translate page
+      const url = window.location.href
+      if (url.includes('translate.google.com')) {
         const urlParams = new URLSearchParams(window.location.search)
-        const originalUrl = urlParams.get('u')
-        if (originalUrl) {
-          baseUrl = decodeURIComponent(originalUrl)
+        const targetLang = urlParams.get('tl')
+        if (targetLang) {
+          setCurrentLang(targetLang)
+          localStorage.setItem('preferred-language', targetLang)
+          return
         }
       }
       
-      const googleTranslateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(baseUrl)}`
-      window.location.href = googleTranslateUrl
+      // Check localStorage
+      const savedLang = localStorage.getItem('preferred-language')
+      if (savedLang) {
+        setCurrentLang(savedLang)
+      }
     }
-    setIsOpen(false)
+
+    detectCurrentLanguage()
+  }, [])
+
+  const handleTranslate = (languageCode: string) => {
+    try {
+      if (languageCode === 'en') {
+        // Reset to original page
+        localStorage.setItem('preferred-language', 'en')
+        setCurrentLang('en')
+        // Remove any translation cookies
+        document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+        // Reload to show original content
+        window.location.reload()
+      } else {
+        // Save language preference
+        localStorage.setItem('preferred-language', languageCode)
+        setCurrentLang(languageCode)
+        
+        // Use a more reliable Google Translate URL approach
+        const currentUrl = window.location.href
+        const translateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}&anno=2`
+        
+        // Navigate to translated version
+        window.location.href = translateUrl
+      }
+      
+      setIsOpen(false)
+    } catch (error) {
+      console.error('Translation error:', error)
+      // Simple fallback - open in new tab
+      const googleTranslateUrl = `https://translate.google.com/translate?sl=en&tl=${languageCode}&u=${encodeURIComponent(window.location.href)}`
+      window.open(googleTranslateUrl, '_blank')
+      setIsOpen(false)
+    }
   }
 
   const getCurrentLanguage = () => {
@@ -62,7 +85,7 @@ const SiteTranslationWidget = () => {
 
   return (
     <div className="relative inline-block">
-      <button
+        <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200 border border-gray-300 dark:border-gray-600 rounded-md hover:border-gray-400 dark:hover:border-gray-500"
         aria-label="Site translation options"
