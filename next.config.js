@@ -59,8 +59,8 @@ const securityHeaders = [
  **/
 const nextConfig = {
   // Static export configuration - hardcoded to prevent external injection
-  output: process.env.EXPORT ? 'export' : undefined,
-  basePath: process.env.BASE_PATH || undefined,
+  output: 'export',
+  basePath: '/tech_blog',
   
   reactStrictMode: true,
   trailingSlash: false,
@@ -76,7 +76,7 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
-    unoptimized: process.env.UNOPTIMIZED ? true : undefined,
+    unoptimized: true,
   },
   
   async headers() {
