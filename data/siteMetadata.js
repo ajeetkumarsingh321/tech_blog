@@ -42,10 +42,10 @@ const siteMetadata = {
     // },
   },
   newsletter: {
-    // Using Formspree for static deployment compatibility (GitHub Pages)
-    // No API routes needed - form submits directly to third-party service
-    provider: 'formspree',
-    formspreeEndpoint: 'https://formspree.io/f/xanybgdo',
+    // Using Mailchimp embedded form for static deployment compatibility (GitHub Pages)
+    // No API routes or environment variables needed - form submits directly to Mailchimp
+    provider: 'mailchimp-embed',
+    mailchimpAction: 'https://gmail.us4.list-manage.com/subscribe/post?u=49d2e5ede6ef1014c37881031&id=cd2121fa0b&f_id=00ffd7e8f0',
   },
   comments: {
     // If you want to use an analytics provider you have to add it to the
