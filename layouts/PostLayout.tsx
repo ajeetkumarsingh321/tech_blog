@@ -9,7 +9,7 @@ import Image from '@/components/Image'
 
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
-import ImprovedTranslationWidget from '@/components/ImprovedTranslationWidget'
+import AlternativeTranslationWidget from '@/components/AlternativeTranslationWidget'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'long',
@@ -38,7 +38,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           <header className="pt-6 xl:pb-6">
             {/* Translation Widget */}
             <div className="flex justify-end mb-4">
-              <ImprovedTranslationWidget />
+              <AlternativeTranslationWidget />
             </div>
             <div className="space-y-1 text-center">
               <dl className="space-y-10">
