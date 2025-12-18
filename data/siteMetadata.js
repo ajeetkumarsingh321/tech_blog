@@ -8,8 +8,8 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://ajeetkumarsingh321.github.io/tech_blog',
 
-  siteLogo: `${process.env.BASE_PATH || ''}/static/images/profile.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  siteLogo: '/tech_blog/static/images/profile.png',
+  socialBanner: '/tech_blog/static/images/twitter-card.png',
   email: 'ajeet@ajeetkumarsingh.dev',
   twitter: '',
   facebook: 'https://www.facebook.com/ajeet.k.singh.10',
