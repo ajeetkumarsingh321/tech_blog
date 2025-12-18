@@ -11,7 +11,7 @@ const siteMetadata = {
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/profile.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   email: 'ajeet@ajeetkumarsingh.dev',
-  twitter: 'https://twitter.com/ajeetkumarsingh',
+  twitter: '',
   facebook: 'https://www.facebook.com/ajeet.k.singh.10',
   linkedin: 'https://www.linkedin.com/in/ajeet-kumar-singh-9b179126/',
   locale: 'en-US',
