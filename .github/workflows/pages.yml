@@ -47,7 +47,7 @@ jobs:
         env:
           EXPORT: 1
           UNOPTIMIZED: 1
-          BASE_PATH: /tech_blog
+          BASE_PATH: ""
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: 1
           CI: true
