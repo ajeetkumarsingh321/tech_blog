@@ -1,6 +1,6 @@
 {
-  "name": "tailwind-nextjs-starter-blog",
-  "version": "2.4.0",
+  "name": "ajeet-tech-blog",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "next dev",
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@headlessui/react": "2.2.0",
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@next/bundle-analyzer": "15.2.4",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/postcss": "^4.0.5",

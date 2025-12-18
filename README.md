@@ -1,23 +1,24 @@
-![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
+# Ajeet Kumar Singh - Tech Blog
 
-# Tailwind Nextjs Starter Blog
+[![Live Site](https://img.shields.io/badge/Live%20Site-ajeetkumarsingh.tech-blue)](https://ajeetkumarsingh.tech)
+[![GitHub](https://img.shields.io/github/license/ajeetkumarsingh321/tech_blog)](https://github.com/ajeetkumarsingh321/tech_blog)
+[![Deploy Status](https://img.shields.io/github/deployments/ajeetkumarsingh321/tech_blog/github-pages)](https://github.com/ajeetkumarsingh321/tech_blog/deployments)
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/timlrx/tailwind-nextjs-starter-blog?style=social)](https://GitHub.com/timlrx/tailwind-nextjs-starter-blog/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/timlrx/tailwind-nextjs-starter-blog?style=social)](https://github.com/timlrx/tailwind-nextjs-starter-blog/forks)
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftimlrxx)](https://x.com/timlrxx)
-[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/timlrx)](https://github.com/sponsors/timlrx)
+Welcome to my personal tech blog! This is where I share insights, tutorials, and thoughts on software development, technology trends, and my journey as a developer.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/timlrx/tailwind-nextjs-starter-blog)
+🌐 **Live Site**: [ajeetkumarsingh.tech](https://ajeetkumarsingh.tech)
 
-This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blogging starter template. Version 2 is based on Next App directory with [React Server Component](https://nextjs.org/docs/getting-started/react-essentials#server-components) and uses [Contentlayer](https://www.contentlayer.dev/) to manage markdown content.
+## About This Blog
 
-Probably the most feature-rich Next.js markdown blogging template out there. Easily configurable and customizable. Perfect as a replacement to existing Jekyll and Hugo individual blogs.
+This blog is built with modern web technologies and focuses on delivering a fast, accessible, and engaging reading experience. I write about various topics including web development, software engineering best practices, and emerging technologies.
 
-Check out the documentation below to get started.
+### 🚀 Built With
 
-Facing issues? Check the [FAQ page](https://github.com/timlrx/tailwind-nextjs-starter-blog/wiki) and do a search on past issues. Feel free to open a new issue if none has been posted previously.
-
-Feature request? Check the past discussions to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcomed!
+- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Content**: [Contentlayer](https://www.contentlayer.dev/) for MDX processing
+- **Deployment**: GitHub Pages with custom domain
+- **Analytics**: Privacy-focused analytics setup
 
 ## Variations
 

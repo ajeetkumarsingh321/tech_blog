@@ -6,12 +6,7 @@ interface Project {
 }
 
 const projectsData: Project[] = [
-  {
-    title: 'Sample Project',
-    description: `A sample project demonstrating modern web development techniques using React, Next.js, and TypeScript. This project showcases best practices in software architecture and clean code principles.`,
-    imgSrc: '/static/images/profile.png',
-    href: '#',
-  },
+  // Projects will be added as they are developed
 ]
 
 export default projectsData
