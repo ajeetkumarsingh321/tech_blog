@@ -42,9 +42,10 @@ const siteMetadata = {
     // },
   },
   newsletter: {
-    // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus, beehive
-    // Please add your .env file and modify it according to your selection
-    provider: 'mailchimp',
+    // Using Formspree for static deployment compatibility (GitHub Pages)
+    // No API routes needed - form submits directly to third-party service
+    provider: 'formspree',
+    formspreeEndpoint: 'https://formspree.io/f/xanybgdo',
   },
   comments: {
     // If you want to use an analytics provider you have to add it to the

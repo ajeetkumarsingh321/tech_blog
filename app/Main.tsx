@@ -76,27 +76,17 @@ export default function Home({ posts }) {
           </Link>
         </div>
       )}
-      {/* Netlify Newsletter Form with Original Styling */}
+      {/* Formspree Newsletter Form - Static Export Safe */}
       <div className="flex items-center justify-center pt-4">
         <div className="bg-gray-100 p-6 dark:bg-gray-800 sm:px-14 sm:py-8">
           <div className="pb-1 text-lg font-semibold text-gray-800 dark:text-gray-100">
             Subscribe to the newsletter
           </div>
           <form
-            name="newsletter"
+            action="https://formspree.io/f/xanybgdo"
             method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
             className="flex flex-col sm:flex-row"
           >
-            {/* Hidden input for Netlify */}
-            <input type="hidden" name="form-name" value="newsletter" />
-            <p className="hidden">
-              <label>
-                Don't fill this out if you're human: <input name="bot-field" />
-              </label>
-            </p>
-
             <div>
               <label htmlFor="email-input">
                 <span className="sr-only">Email address</span>
