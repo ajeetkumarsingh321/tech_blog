@@ -2,7 +2,6 @@
 
 import siteMetadata from '@/data/siteMetadata'
 import { useEffect, useState } from 'react'
-import HydrationBoundary from './HydrationBoundary'
 
 const ScrollTopAndComment = () => {
   const [show, setShow] = useState(false)
@@ -25,11 +24,10 @@ const ScrollTopAndComment = () => {
   }
 
   return (
-    <HydrationBoundary>
-      <div
-        className={`fixed right-8 bottom-8 hidden flex-col gap-3 ${show ? 'md:flex' : 'md:hidden'}`}
-      >
-      {siteMetadata.comments?.provider && (
+    <div
+      className={`fixed right-8 bottom-8 hidden flex-col gap-3 ${show ? 'md:flex' : 'md:hidden'}`}
+    >
+    {siteMetadata.comments?.provider && (
         <button
           aria-label="Scroll To Comment"
           onClick={handleScrollToComment}
@@ -57,7 +55,6 @@ const ScrollTopAndComment = () => {
           />        </svg>
       </button>
     </div>
-    </HydrationBoundary>
   )
 }
 

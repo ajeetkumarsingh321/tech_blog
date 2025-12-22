@@ -36,15 +36,16 @@ export default function Home({ posts }) {
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
                         <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
+                          <h2 className="text-2xl leading-8 font-bold tracking-tight mb-2">
                             <Link
                               href={`/blog/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
+                              className="text-gray-900 dark:text-gray-100 block"
+                              data-translate="title"
+                              style={{ minHeight: '2.5rem', display: 'block' }}
                             >
-                              {title}
+                              <span className="block">{title}</span>
                             </Link>
                           </h2>
-
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                           {summary}

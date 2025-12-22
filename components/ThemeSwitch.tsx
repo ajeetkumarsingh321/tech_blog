@@ -11,7 +11,6 @@ import {
   RadioGroup,
   Transition,
 } from '@headlessui/react'
-import ClientOnly from './ClientOnly'
 
 const Sun = () => (
   <svg
@@ -58,18 +57,25 @@ const Blank = () => <svg className="h-6 w-6" />
 const ThemeSwitch = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
 
-  return (
-    <ClientOnly
-      fallback={
-        <div className="flex items-center">
-          <div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
-            <div aria-label="Theme switcher" className="h-6 w-6">
-              <Blank />
-            </div>
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center">
+        <div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
+          <div aria-label="Theme switcher" className="h-6 w-6">
+            <Blank />
           </div>
         </div>
-      }
-    >
+      </div>
+    )
+  }
+
+  return (
       <div className="flex items-center" suppressHydrationWarning>
         <Menu as="div" className="relative inline-block text-left">
           <div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
@@ -141,7 +147,6 @@ const ThemeSwitch = () => {
           </Transition>
         </Menu>
       </div>
-    </ClientOnly>
   )
 }
 
