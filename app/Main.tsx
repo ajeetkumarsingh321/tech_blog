@@ -1,5 +1,6 @@
 import Link from '@/components/Link'
 import NewsletterSection from '@/components/NewsletterSection'
+import ShareButtons from '@/components/ShareButtons'
 
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
@@ -49,14 +50,22 @@ export default function Home({ posts }) {
                           {summary}
                         </div>
                       </div>
-                      <div className="text-base leading-6 font-medium">
-                        <Link
-                          href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                          aria-label={`Read more: "${title}"`}
-                        >
-                          Read more &rarr;
-                        </Link>
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="text-base leading-6 font-medium">
+                          <Link
+                            href={`/blog/${slug}`}
+                            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                            aria-label={`Read more: "${title}"`}
+                          >
+                            Read more &rarr;
+                          </Link>
+                        </div>
+                        <ShareButtons
+                          title={title}
+                          summary={summary || ''}
+                          url={`${siteMetadata.siteUrl}/blog/${slug}`}
+                          imageUrl=""
+                        />
                       </div>
                     </div>
                   </div>

@@ -5,8 +5,15 @@
 body[bis_skin_checked],
 body[data-new-gr-c-s-check-loaded],
 body[data-gr-ext-installed],
-div[bis_skin_checked] {
+div[bis_skin_checked],
+span[bis_skin_checked],
+section[bis_skin_checked],
+header[bis_skin_checked],
+footer[bis_skin_checked],
+article[bis_skin_checked] {
   /* Reset any potential extension styling */
   outline: none !important;
   border: none !important;
+  /* Ensure no visual differences due to extension attributes */
+  box-shadow: none !important;
 }

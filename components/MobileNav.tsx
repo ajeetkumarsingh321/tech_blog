@@ -5,7 +5,7 @@ import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'bo
 import { Fragment, useState, useEffect, useRef } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
-import AlternativeTranslationWidget from './AlternativeTranslationWidget'
+import InlineTranslationWidget from './InlineTranslationWidget'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
@@ -96,7 +96,7 @@ const MobileNav = () => {
                 
                 {/* Site Translation Widget for Mobile */}
                 <div className="mt-8">
-                  <AlternativeTranslationWidget />
+                  <InlineTranslationWidget />
                 </div>
               </nav>
 

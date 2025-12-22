@@ -30,6 +30,9 @@ public/sitemap.xml
 
 # misc
 .DS_Store
+*.backup
+*.tmp
+*~
 
 # debug
 *.log

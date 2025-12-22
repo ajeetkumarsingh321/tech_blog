@@ -6,6 +6,7 @@ import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
+import ShareButtons from '@/components/ShareButtons'
 
 import siteMetadata from '@/data/siteMetadata'
 
@@ -118,7 +119,20 @@ export default function ListLayout({
         <ul>
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
-            const { path, date, title, summary } = post
+            const { path, date, title, summary, images } = post
+            
+            // Extract the first image from the blog post for social sharing
+            const getFirstImageUrl = () => {
+              if (images && Array.isArray(images) && images.length > 0) {
+                const img = images[0]
+                return img.includes('http') ? img : `${siteMetadata.siteUrl}${img}`
+              }
+              // Fallback to default social banner
+              return `${siteMetadata.siteUrl}${siteMetadata.socialBanner}`
+            }
+            
+            const imageUrl = getFirstImageUrl()
+            
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -140,14 +154,24 @@ export default function ListLayout({
                     <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                       {summary}
                     </div>
-                    <div className="text-base leading-6 font-medium">
-                      <Link
-                        href={`/${path}`}
-                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        aria-label={`Read more: "${title}"`}
-                      >
-                        Read more &rarr;
-                      </Link>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="text-base leading-6 font-medium">
+                        <Link
+                          href={`/${path}`}
+                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          aria-label={`Read more: "${title}"`}
+                        >
+                          Read more &rarr;
+                        </Link>
+                      </div>
+                      <div>
+                        <ShareButtons
+                          title={title}
+                          summary={summary || ''}
+                          url={`${siteMetadata.siteUrl}/${path}`}
+                          imageUrl={imageUrl}
+                        />
+                      </div>
                     </div>
                   </div>
                 </article>

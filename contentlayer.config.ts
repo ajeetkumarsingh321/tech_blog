@@ -85,6 +85,7 @@ export const Blog = defineDocumentType(() => ({
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
     lastmod: { type: 'date' },
+    tags: { type: 'list', of: { type: 'string' } },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
     images: { type: 'json' },
@@ -135,12 +136,12 @@ export default makeSource({
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [
-      // remarkExtractFrontmatter, // Temporarily disabled to fix duplicate title
       remarkGfm,
       remarkCodeTitles,
-      remarkMath,
       remarkImgToJsx,
-      remarkAlert,
+      // Keep heavy plugins disabled for faster local builds
+      // remarkMath,
+      // remarkAlert,
     ],
     rehypePlugins: [
       rehypeSlug,
@@ -154,15 +155,21 @@ export default makeSource({
           content: icon,
         },
       ],
-      rehypeKatex,
-      rehypeKatexNoTranslate,
-      [rehypeCitation, { path: path.join(root, 'data') }],
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
-      rehypePresetMinify,
+      // Disable heavy plugins to speed up dev builds
+      // rehypeKatex,
+      // rehypeKatexNoTranslate,
+      // [rehypeCitation, { path: path.join(root, 'data') }],
+      // rehypePresetMinify,
     ],
   },
   onSuccess: async (importData) => {
-    const { allBlogs } = await importData()
-    createSearchIndex(allBlogs)
+    try {
+      const data = await importData()
+      const allBlogs = (data.allDocuments || []).filter((d) => d._type === 'Blog')
+      createSearchIndex(allBlogs)
+    } catch (e) {
+      console.warn('Contentlayer onSuccess skipped:', (e && (e).message) || e)
+    }
   },
 })
