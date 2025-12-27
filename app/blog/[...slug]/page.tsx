@@ -44,8 +44,12 @@ export async function generateMetadata(props: {
     imageList = typeof post.images === 'string' ? [post.images] : post.images
   }
   const ogImages = imageList.map((img) => {
+    const imageUrl = img && img.includes('http') ? img : siteMetadata.siteUrl + img
     return {
-      url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+      alt: post.title,
     }
   })
 
@@ -68,7 +72,9 @@ export async function generateMetadata(props: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: imageList,
+      images: imageList.map((img) =>
+        img && img.includes('http') ? img : siteMetadata.siteUrl + img
+      ),
     },
   }
 }

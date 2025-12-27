@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Social Image Fix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        #canvas {
+            border: 2px solid #ddd;
+            margin: 20px 0;
+            max-width: 100%;
+            background: #f9f9f9;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        button:hover {
+            background: #5a6fd8;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #e7ffe7;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Quick Social Image Fix</h1>
+        <p>This will create a properly padded version of your image with 1200x630px dimensions.</p>
+        
+        <div class="instructions">
+            <h3>Steps:</h3>
+            <ol>
+                <li>Click the button below to automatically generate the padded social image</li>
+                <li>Download the generated image</li>
+                <li>Replace the existing <code>Reflecting-01-social.png</code> in your <code>/public/images/</code> folder</li>
+                <li>Rebuild and deploy your site</li>
+            </ol>
+        </div>
+        
+        <button onclick="generateSocialImage()">Generate Social Image</button>
+        <button onclick="downloadImage()" id="downloadBtn" style="display:none;">Download Reflecting-01-social.png</button>
+        
+        <div class="success" id="successMsg">
+            <strong>✅ Social image generated successfully!</strong><br>
+            Click "Download" and replace the file in your /public/images/ folder.
+        </div>
+        
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+
+    <script>
+        function generateSocialImage() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const successMsg = document.getElementById('successMsg');
+            
+            // Set canvas to optimal social media dimensions
+            canvas.width = 1200;
+            canvas.height = 630;
+            canvas.style.display = 'block';
+            
+            // Create the image
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Create gradient background
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Calculate image position with generous padding
+                const padding = 100; // Top/bottom padding
+                const sidePadding = 120; // Left/right padding
+                
+                const availableWidth = canvas.width - (sidePadding * 2);
+                const availableHeight = canvas.height - (padding * 2);
+                
+                // Calculate scaling to fit image in available space
+                const imgAspect = img.width / img.height;
+                const availableAspect = availableWidth / availableHeight;
+                
+                let drawWidth, drawHeight;
+                if (imgAspect > availableAspect) {
+                    drawWidth = availableWidth;
+                    drawHeight = drawWidth / imgAspect;
+                } else {
+                    drawHeight = availableHeight;
+                    drawWidth = drawHeight * imgAspect;
+                }
+                
+                // Center the image
+                const x = (canvas.width - drawWidth) / 2;
+                const y = (canvas.height - drawHeight) / 2;
+                
+                // Add white background behind image with shadow
+                ctx.save();
+                
+                // Shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                ctx.shadowBlur = 30;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 10;
+                
+                // White background
+                ctx.fillStyle = '#ffffff';
+                roundRect(ctx, x - 30, y - 30, drawWidth + 60, drawHeight + 60, 15);
+                ctx.fill();
+                
+                ctx.restore();
+                
+                // Draw the main image
+                ctx.save();
+                roundRect(ctx, x - 15, y - 15, drawWidth + 30, drawHeight + 30, 10);
+                ctx.clip();
+                ctx.drawImage(img, x, y, drawWidth, drawHeight);
+                ctx.restore();
+                
+                // Add title overlay at bottom
+                const overlayHeight = 100;
+                const overlayY = canvas.height - overlayHeight - 40;
+                
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+                ctx.shadowBlur = 20;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 5;
+                
+                roundRect(ctx, 80, overlayY, canvas.width - 160, overlayHeight, 12);
+                ctx.fill();
+                
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                
+                // Add title text
+                ctx.fillStyle = '#2d3748';
+                ctx.font = 'bold 32px Arial, -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.textAlign = 'center';
+                const titleY = overlayY + 45;
+                ctx.fillText('Reflecting on 2025: LLM-Centric Development', canvas.width / 2, titleY);
+                
+                // Add subtitle
+                ctx.font = '20px Arial, -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillStyle = '#4a5568';
+                ctx.fillText('ajeetkumarsingh.tech', canvas.width / 2, titleY + 35);
+                
+                // Show success and download button
+                downloadBtn.style.display = 'inline-block';
+                successMsg.style.display = 'block';
+                
+                console.log('✅ Social image generated with proper padding!');
+            };
+            
+            img.onerror = function() {
+                alert('Could not load the original image. Make sure your site is running.');
+            };
+            
+            // Try to load from your deployed site first, then fallback to local
+            img.src = 'https://ajeetkumarsingh.tech/images/Reflecting-01.png';
+        }
+        
+        function downloadImage() {
+            const canvas = document.getElementById('canvas');
+            const link = document.createElement('a');
+            link.download = 'Reflecting-01-social.png';
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        }
+        
+        // Helper function for rounded rectangles
+        function roundRect(ctx, x, y, w, h, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + w - radius, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+            ctx.lineTo(x + w, y + h - radius);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+            ctx.lineTo(x + radius, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+    </script>
+</body>
+</html>
