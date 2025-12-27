@@ -47,8 +47,8 @@ export async function generateMetadata(props: {
     const imageUrl = img && img.includes('http') ? img : siteMetadata.siteUrl + img
     return {
       url: imageUrl,
-      width: 1200,
-      height: 630,
+      width: 1536,
+      height: 1024,
       alt: post.title,
     }
   })
