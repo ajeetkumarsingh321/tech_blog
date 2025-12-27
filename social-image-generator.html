@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Social Media Image with Padding</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        #preview {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+            max-width: 100%;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        button:hover {
+            background: #5a6fd8;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .settings {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .settings label {
+            display: block;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+        
+        .settings input, .settings select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Social Media Image Generator</h1>
+        <p>This tool will add padding to your image and create a version optimized for social sharing (1200x630px).</p>
+        
+        <div class="settings">
+            <h3>Settings</h3>
+            <label>Padding (pixels):</label>
+            <input type="number" id="padding" value="60" min="0" max="200">
+            
+            <label>Background Color:</label>
+            <select id="bgColor">
+                <option value="white">White</option>
+                <option value="gradient">Blue Gradient</option>
+                <option value="#f0f0f0">Light Gray</option>
+                <option value="#667eea">Blue</option>
+            </select>
+            
+            <label>Corner Radius:</label>
+            <input type="number" id="cornerRadius" value="12" min="0" max="50">
+        </div>
+        
+        <input type="file" id="imageInput" accept="image/*" style="margin: 20px 0;">
+        <br>
+        <button onclick="generateImage()">Generate Social Image</button>
+        <button onclick="downloadImage()" id="downloadBtn" style="display:none;">Download Image</button>
+        
+        <canvas id="preview" style="display:none;"></canvas>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Click "Choose File" and select your <code>Reflecting-01.png</code> image</li>
+                <li>Adjust padding and styling as needed</li>
+                <li>Click "Generate Social Image"</li>
+                <li>Click "Download Image" to save as <code>Reflecting-01-social.png</code></li>
+                <li>Upload the new image to your <code>/public/images/</code> folder</li>
+                <li>Update your blog post frontmatter to use the new image</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function generateImage() {
+            const input = document.getElementById('imageInput');
+            const canvas = document.getElementById('preview');
+            const ctx = canvas.getContext('2d');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            if (!input.files || !input.files[0]) {
+                alert('Please select an image first');
+                return;
+            }
+            
+            const padding = parseInt(document.getElementById('padding').value);
+            const bgColor = document.getElementById('bgColor').value;
+            const cornerRadius = parseInt(document.getElementById('cornerRadius').value);
+            
+            // Set canvas size to optimal social media dimensions
+            canvas.width = 1200;
+            canvas.height = 630;
+            canvas.style.display = 'block';
+            
+            const img = new Image();
+            img.onload = function() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Set background
+                if (bgColor === 'gradient') {
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#667eea');
+                    gradient.addColorStop(1, '#764ba2');
+                    ctx.fillStyle = gradient;
+                } else {
+                    ctx.fillStyle = bgColor;
+                }
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Calculate image position and size
+                const availableWidth = canvas.width - (padding * 2);
+                const availableHeight = canvas.height - (padding * 2);
+                
+                const imgAspect = img.width / img.height;
+                const availableAspect = availableWidth / availableHeight;
+                
+                let drawWidth, drawHeight;
+                if (imgAspect > availableAspect) {
+                    drawWidth = availableWidth;
+                    drawHeight = drawWidth / imgAspect;
+                } else {
+                    drawHeight = availableHeight;
+                    drawWidth = drawHeight * imgAspect;
+                }
+                
+                const x = (canvas.width - drawWidth) / 2;
+                const y = (canvas.height - drawHeight) / 2;
+                
+                // Draw rounded rectangle background for image (optional)
+                if (cornerRadius > 0) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.roundRect(x - 20, y - 20, drawWidth + 40, drawHeight + 40, cornerRadius);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fill();
+                    ctx.clip();
+                }
+                
+                // Draw the image
+                ctx.drawImage(img, x, y, drawWidth, drawHeight);
+                
+                if (cornerRadius > 0) {
+                    ctx.restore();
+                }
+                
+                downloadBtn.style.display = 'inline-block';
+            };
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+        
+        function downloadImage() {
+            const canvas = document.getElementById('preview');
+            const link = document.createElement('a');
+            link.download = 'Reflecting-01-social.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Polyfill for roundRect if not available
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + w - radius, y);
+                this.quadraticCurveTo(x + w, y, x + w, y + radius);
+                this.lineTo(x + w, y + h - radius);
+                this.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+                this.lineTo(x + radius, y + h);
+                this.quadraticCurveTo(x, y + h, x, y + h - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+    </script>
+</body>
+</html>
