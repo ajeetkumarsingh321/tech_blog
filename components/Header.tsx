@@ -27,7 +27,8 @@ const Header = () => {
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
               <div className="h-6 text-2xl font-semibold">
-                {siteMetadata.headerTitle}
+                <span className="hidden sm:inline">{siteMetadata.headerTitle}</span>
+                <span className="sm:hidden">AKS</span>
               </div>
             ) : (
               siteMetadata.headerTitle
@@ -39,11 +40,11 @@ const Header = () => {
         <div className="no-scrollbar hidden max-w-40 items-center gap-x-6 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
           {headerNavLinks
             .filter((link) => link.href !== '/')
-            .map((link) => (
+            .map((link) =>
               link.disabled ? (
                 <span
                   key={link.title}
-                  className="mx-2 font-medium text-gray-400 dark:text-gray-600 cursor-not-allowed whitespace-nowrap"
+                  className="mx-2 cursor-not-allowed font-medium whitespace-nowrap text-gray-400 dark:text-gray-600"
                   title="Coming Soon"
                 >
                   {link.title}
@@ -52,12 +53,12 @@ const Header = () => {
                 <Link
                   key={link.title}
                   href={link.href}
-                  className="hover:text-primary-500 dark:hover:text-primary-400 mx-2 font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap"
+                  className="hover:text-primary-500 dark:hover:text-primary-400 mx-2 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
                 >
                   {link.title}
                 </Link>
               )
-            ))}
+            )}
         </div>
         <SearchButton />
         <InlineTranslationWidget />
